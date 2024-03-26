@@ -17,6 +17,11 @@ app.get("/", async (req, res) => {
   res.send(films);
 });
 
+app.delete("/:id", async (req, res) => {
+  const filmm = await Film.findByIdAndDelete(req.params.id);
+  return res.send(filmm);
+});
+
 app.post("/", async (req, res) => {
   const film = new Film({
     title: req.body.title,
@@ -25,7 +30,7 @@ app.post("/", async (req, res) => {
     trailer_url: req.body.trailer_url,
   });
   film.save();
-  res.send(film);
+  return res.send(film);
 });
 
 app.listen(port, () => {

@@ -4,9 +4,6 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 const port = 3000;
-mongoose.connect(
-  "mongodb+srv://juanvictorsouzadasilva:gnlX1p87Su3jSiJT@starwars-api.3pfbkab.mongodb.net/?retryWrites=true&w=majority&appName=starwars-api"
-);
 
 const Film = mongoose.model("Film", {
   title: String,
@@ -15,8 +12,9 @@ const Film = mongoose.model("Film", {
   trailer_url: String,
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
+app.get("/", async (req, res) => {
+  const films = await Film.find();
+  res.send(films);
 });
 
 app.post("/", async (req, res) => {
@@ -31,5 +29,8 @@ app.post("/", async (req, res) => {
 });
 
 app.listen(port, () => {
+  mongoose.connect(
+    "mongodb+srv://juanvictorsouzadasilva:gnlX1p87Su3jSiJT@starwars-api.3pfbkab.mongodb.net/?retryWrites=true&w=majority&appName=starwars-api"
+  );
   console.log("App running");
 });
